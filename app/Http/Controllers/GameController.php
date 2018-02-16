@@ -147,6 +147,10 @@ class GameController extends Controller
 
         $game->wins_player++;
 
+        if ($game->shouldEnd()) {
+            $game->ended_at = now();
+        }
+
         return $game;
     }
 }
