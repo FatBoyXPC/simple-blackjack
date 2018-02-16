@@ -10,8 +10,8 @@ Player Wins: {{ $game->wins_player }}
 Dealer Wins: {{ $game->wins_dealer }}
 </p>
 <p>
-Player Hand: {{ $game->hand_player }}
+Player Hand: {{ $game->playerHand }}
 <br>
-Dealer Hand: {{ $game->hand_dealer }}
+Dealer Hand: {{ $game->dealerHand }}
 </p>
 @endsection

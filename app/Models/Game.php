@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Collections\CardsCollection;
 use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
@@ -17,6 +18,16 @@ class Game extends Model
     public function getStatusAttribute()
     {
         return $this->ended_at ? 'Over' : 'Active';
+    }
+
+    public function getPlayerHandAttribute()
+    {
+        return CardsCollection::makeFromString($this->hand_player);
+    }
+
+    public function getDealerHandAttribute()
+    {
+        return CardsCollection::makeFromString($this->hand_dealer);
     }
 
     public function cards()
