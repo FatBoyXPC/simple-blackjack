@@ -29,7 +29,7 @@ class CardsCollection extends Collection
 
     public static function makeFromString($cardsString)
     {
-        return static::make(explode(',', $cardsString));
+        return static::make(explode(',', $cardsString))->filter();
     }
 
     public function value()
