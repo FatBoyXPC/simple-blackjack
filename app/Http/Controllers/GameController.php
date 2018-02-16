@@ -59,11 +59,17 @@ class GameController extends Controller
         $deck = new Deck($game->cards);
         $playerHand = $deck->deal(1, CardsCollection::makeFromString($game->hand_player));
 
-        $game->update([
+        $game->fill([
             'hand_player' => $playerHand,
             'cards' => $deck,
             'cards_used' => $deck->used(),
         ]);
+
+        if ($playerHand->value() > self::MAX_HAND_VALUE) {
+            $game->wins_dealer++;
+        }
+
+        $game->save();
 
         return redirect()->route('games.show', $game);
     }

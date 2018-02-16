@@ -29,4 +29,23 @@ class HitOnHandTest extends TestCase
 
         $this->assertEmpty($game->fresh()->cards);
     }
+
+    /** @test */
+    public function hitOnGivenHandBusts()
+    {
+        $this->withoutExceptionHandling();
+        $game = Game::create([
+            'cards' => 'C6',
+            'hand_player' => 'HK,H6',
+            'hand_dealer' => 'C10,S4',
+        ]);
+
+        $response = $this->followRedirects($this->post(route('games.hit', $game)));
+
+        $response->assertSee('Game Status: Active');
+        $response->assertSee('Player Hand: HK,H6,C6');
+        $response->assertSee('Dealer Hand: C10,S4');
+
+        $this->assertEquals(1, $game->fresh()->wins_dealer);
+    }
 }
