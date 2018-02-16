@@ -32,4 +32,22 @@ class GameController extends Controller
             'game' => $game,
         ]);
     }
+
+    public function deal(Game $game)
+    {
+        $cards = $game->cards();
+        $playerHand = implode(',', [$cards->pop(), $cards->pop()]);
+        $dealerHand = implode(',', [$cards->pop(), $cards->pop()]);
+        $newCards = $cards->implode(',');
+        $usedCards = implode(',', [$playerHand, $dealerHand]);
+
+        $game->update([
+            'hand_player' => $playerHand,
+            'hand_dealer' => $dealerHand,
+            'cards' => $newCards,
+            'cards_used' => $usedCards,
+        ]);
+
+        return redirect()->route('games.show', $game);
+    }
 }
