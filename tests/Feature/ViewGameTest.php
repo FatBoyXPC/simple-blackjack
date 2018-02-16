@@ -14,8 +14,6 @@ class ViewGameTest extends TestCase
     /** @test */
     public function viewNewGame()
     {
-        $this->withoutExceptionHandling();
-
         $game = Game::create([]);
 
         $response = $this->get(route('games.show', $game));
@@ -28,8 +26,6 @@ class ViewGameTest extends TestCase
     /** @test */
     public function viewGameThatHasBeenPlayed()
     {
-        $this->withoutExceptionHandling();
-
         $game = Game::create([
             'wins_player' => 5,
             'wins_dealer' => 8,
@@ -45,8 +41,6 @@ class ViewGameTest extends TestCase
     /** @test */
     public function viewEndedGame()
     {
-        $this->withoutExceptionHandling();
-
         $game = Game::create([
             'wins_player' => 5,
             'wins_dealer' => 8,
