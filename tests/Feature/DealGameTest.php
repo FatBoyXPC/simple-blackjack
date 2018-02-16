@@ -14,15 +14,14 @@ class DealGameTest extends TestCase
     /** @test */
     public function dealCardForGame()
     {
-        $this->withoutExceptionHandling();
         $game = Game::create([
-            'cards' => '5C,2H,KH,AH',
+            'cards' => 'C5,H2,HK,HA',
         ]);
 
         $response = $this->followRedirects($this->post(route('games.deal', $game)));
 
         $response->assertSee('Game Status: Active');
-        $response->assertSee('Player Hand: AH,KH');
-        $response->assertSee('Dealer Hand: 2H,5C');
+        $response->assertSee('Player Hand: HA,HK');
+        $response->assertSee('Dealer Hand: H2,C5');
     }
 }

@@ -52,4 +52,14 @@ class GameTest extends TestCase
 
         $this->assertEquals('Over', $game->status);
     }
+
+    /** @test */
+    public function playerHandShowsCardsAndValue()
+    {
+        $game = Game::make([
+            'hand_player' => 'HA,HK',
+        ]);
+
+        $this->assertEquals('HA,HK (21)', $game->playerHand);
+    }
 }

@@ -22,4 +22,12 @@ class CardsCollectionTest extends TestCase
 
         $this->assertEquals(new CardsCollection(['AH', 'KH']), $cards);
     }
+
+    /** @test */
+    public function itCanCalculateNumericValue()
+    {
+        $cards = CardsCollection::makeFromString('HA,HK');
+
+        $this->assertEquals(21, $cards->value());
+    }
 }

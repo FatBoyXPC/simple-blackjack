@@ -22,12 +22,19 @@ class Game extends Model
 
     public function getPlayerHandAttribute()
     {
-        return CardsCollection::makeFromString($this->hand_player);
+        return $this->handAttribute($this->hand_player);
+    }
+
+    private function handAttribute($hand)
+    {
+        $hand = CardsCollection::makeFromString($hand);
+
+        return "{$hand} ({$hand->value()})";
     }
 
     public function getDealerHandAttribute()
     {
-        return CardsCollection::makeFromString($this->hand_dealer);
+        return $this->handAttribute($this->hand_dealer);
     }
 
     public function cards()
