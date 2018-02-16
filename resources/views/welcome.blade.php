@@ -80,6 +80,10 @@
             <div class="content">
                 <div class="title m-b-md">
                     Laravel
+                    <form method="POST" action="{{ route('games.store') }}">
+                        @csrf
+                        <button type="submit">New Game!</button>
+                    </form>
                 </div>
 
                 <div class="links">
