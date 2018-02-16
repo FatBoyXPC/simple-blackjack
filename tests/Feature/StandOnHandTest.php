@@ -49,7 +49,6 @@ class StandOnHandTest extends TestCase
 
         $response = $this->followRedirects($this->post(route('games.stand', $game)));
 
-        $response->assertSee('Game Status: Active');
         $response->assertSee('Player Hand: HK,H10');
         $response->assertSee('Dealer Hand: C8,S4,C5');
         //$response->assertSessionHas('hand_status', 'Lose');
