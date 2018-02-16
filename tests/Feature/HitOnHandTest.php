@@ -26,5 +26,7 @@ class HitOnHandTest extends TestCase
         $response->assertSee('Game Status: Active');
         $response->assertSee('Player Hand: HK,H6,C5');
         $response->assertSee('Dealer Hand: C10,S4');
+
+        $this->assertEmpty($game->fresh()->cards);
     }
 }
