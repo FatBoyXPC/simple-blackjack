@@ -17,6 +17,7 @@ class StandOnHandTest extends TestCase
         $this->withoutExceptionHandling();
         $game = Game::create([
             'cards' => 'C5',
+            'cards_used' => 'HK,H6,C10,S4',
             'hand_player' => 'HK,H6',
             'hand_dealer' => 'C10,S4',
         ]);
@@ -32,6 +33,7 @@ class StandOnHandTest extends TestCase
             $this->assertEquals(0, $game->wins_player);
             $this->assertEquals(1, $game->wins_dealer);
             $this->assertEmpty($game->cards);
+            $this->assertEquals('HK,H6,C10,S4,C5', $game->cards_used);
         });
     }
 

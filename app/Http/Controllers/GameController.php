@@ -40,7 +40,7 @@ class GameController extends Controller
 
     public function deal(Game $game)
     {
-        $deck = new Deck($game->cards);
+        $deck = new Deck($game->cards, $game->cards_used);
         $playerHand = $deck->deal(2);
         $dealerHand = $deck->deal(2);
 
@@ -56,7 +56,7 @@ class GameController extends Controller
 
     public function hit(Game $game)
     {
-        $deck = new Deck($game->cards);
+        $deck = new Deck($game->cards, $game->cards_used);
         $playerHand = $deck->deal(1, CardsCollection::makeFromString($game->hand_player));
 
         $game->fill([
@@ -91,7 +91,7 @@ class GameController extends Controller
 
     public function stand(Game $game)
     {
-        $deck = new Deck($game->cards);
+        $deck = new Deck($game->cards, $game->cards_used);
         $dealerHand = $this->dealerHitsUntilMaximumValue(CardsCollection::makeFromString($game->hand_dealer), $deck);
 
         $game->fill([

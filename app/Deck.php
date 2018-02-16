@@ -12,10 +12,10 @@ class Deck implements Countable
 
     protected $used;
 
-    public function __construct($deck)
+    public function __construct($deck, $used)
     {
         $this->cards = CardsCollection::makeFromString($deck);
-        $this->used = new CardsCollection;
+        $this->used = CardsCollection::makeFromString($used);
     }
 
     public function __toString()
