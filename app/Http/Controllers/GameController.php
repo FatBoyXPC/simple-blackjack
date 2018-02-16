@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Deck;
 use App\Models\Game;
 use Illuminate\Http\Request;
 
@@ -35,17 +36,15 @@ class GameController extends Controller
 
     public function deal(Game $game)
     {
-        $cards = $game->cards();
-        $playerHand = implode(',', [$cards->pop(), $cards->pop()]);
-        $dealerHand = implode(',', [$cards->pop(), $cards->pop()]);
-        $newCards = $cards->implode(',');
-        $usedCards = implode(',', [$playerHand, $dealerHand]);
+        $deck = new Deck($game->cards);
+        $playerHand = $deck->deal(2);
+        $dealerHand = $deck->deal(2);
 
         $game->update([
             'hand_player' => $playerHand,
             'hand_dealer' => $dealerHand,
-            'cards' => $newCards,
-            'cards_used' => $usedCards,
+            'cards' => $deck,
+            'cards_used' => $deck->used(),
         ]);
 
         return redirect()->route('games.show', $game);
