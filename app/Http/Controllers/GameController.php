@@ -66,12 +66,27 @@ class GameController extends Controller
         ]);
 
         if ($playerHand->value() > self::MAX_HAND_VALUE) {
-            $game->wins_dealer++;
+            $data = $this->loseHand($game);
         }
 
         $game->save();
 
-        return redirect()->route('games.show', $game);
+        return redirect()->route('games.show', $game)->with($data ?? []);
+    }
+
+    private function loseHand($game)
+    {
+        $game->wins_dealer++;
+
+        $data = [
+            'hand_status' => 'Lost',
+        ];
+
+        if ($game->shouldEnd()) {
+            $game->ended_at = now();
+        }
+
+        return $data;
     }
 
     public function stand(Game $game)

@@ -13,5 +13,11 @@ Dealer Wins: {{ $game->wins_dealer }}
 Player Hand: {{ $game->playerHand }}
 <br>
 Dealer Hand: {{ $game->dealerHand }}
+
+@if(@session('hand_status'))
+    <br>
+    <br>
+    Hand {{ @session('hand_status') }}
+@endif
 </p>
 @endsection

@@ -42,9 +42,9 @@ class HitOnHandTest extends TestCase
 
         $response = $this->followRedirects($this->post(route('games.hit', $game)));
 
-        $response->assertSee('Game Status: Active');
         $response->assertSee('Player Hand: HK,H6,C6');
         $response->assertSee('Dealer Hand: C10,S4');
+        $response->assertSee('Lost');
 
         $this->assertEquals(1, $game->fresh()->wins_dealer);
     }

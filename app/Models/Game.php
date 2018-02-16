@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Game extends Model
 {
+    const MAX_CARDS_USED_PERCENT = 0.6;
+
     protected $guarded = [];
 
     protected $casts = [
@@ -50,5 +52,13 @@ class Game extends Model
     public function cardsUsed()
     {
         return $this->processCards($this->cards_used);
+    }
+
+    public function shouldEnd()
+    {
+        $usedCount = $this->cardsUsed()->count();
+        $total = $this->cards()->count() + $usedCount;
+
+        return $usedCount / $total >= self::MAX_CARDS_USED_PERCENT;
     }
 }

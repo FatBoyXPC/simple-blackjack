@@ -62,4 +62,26 @@ class GameTest extends TestCase
 
         $this->assertEquals('HA,HK (21)', $game->playerHand);
     }
+
+    /** @test */
+    public function gameShouldEndWhen60PercentOfCardsUsed()
+    {
+        $game = Game::make([
+            'cards' => 'HA,HK,HQ,HJ',
+            'cards_used' => 'H10,H9,H8,H7,H6,H5',
+        ]);
+
+        $this->assertTrue($game->shouldEnd());
+    }
+
+    /** @test */
+    public function gameShouldNotEndWhen60PercentOfCardsUsed()
+    {
+        $game = Game::make([
+            'cards' => 'HA,HK,HQ,HJ,H10',
+            'cards_used' => 'H9,H8,H7,H6,H5',
+        ]);
+
+        $this->assertFalse($game->shouldEnd());
+    }
 }
