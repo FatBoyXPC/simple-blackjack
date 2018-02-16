@@ -32,4 +32,24 @@ class GameTest extends TestCase
 
         $this->assertEquals($cards, $game->cardsUsed());
     }
+
+    /** @test */
+    public function statusIsActiveWithoutEndedAtTimestamp()
+    {
+        $game = Game::make([
+            'ended_at' => null,
+        ]);
+
+        $this->assertEquals('Active', $game->status);
+    }
+
+    /** @test */
+    public function statusIsOverWithEndedAtTimestamp()
+    {
+        $game = Game::make([
+            'ended_at' => (string) now(),
+        ]);
+
+        $this->assertEquals('Over', $game->status);
+    }
 }

@@ -25,4 +25,11 @@ class GameController extends Controller
             return implode('', $card);
         });
     }
+
+    public function show(Game $game, Request $request)
+    {
+        return view('games.show', [
+            'game' => $game,
+        ]);
+    }
 }
