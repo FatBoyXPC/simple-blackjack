@@ -100,7 +100,7 @@ class GameController extends Controller
             'cards_used' => $deck->used(),
         ]);
 
-        $this->updateWinner($game)->save();
+        $this->finishHand($game)->save();
 
         return redirect()->route('games.show', $game)->with([
             'hand_status' => $game->playerHandStatus,
@@ -118,37 +118,30 @@ class GameController extends Controller
         return $this->dealerHitsUntilMaximumValue($dealerHand, $deck);
     }
 
-    private function updateWinner(Game $game)
+    private function finishHand(Game $game)
     {
+        if ($game->shouldEnd()) {
+            $game->ended_at = now();
+        }
+
         $player = CardsCollection::makeFromString($game->hand_player);
         $dealer = CardsCollection::makeFromString($game->hand_dealer);
 
         if ($player->value() > self::MAX_HAND_VALUE) {
-            $game->wins_dealer++;
-
-            return $game;
+            $win = -1;
         }
 
         if ($dealer->value() > self::MAX_HAND_VALUE) {
-            $game->wins_player++;
-
-            return $game;
+            $win = 1;
         }
 
-        if ($player->value() == $dealer->value()) {
-            return $game;
-        }
+        $winnerOptions = ['dealer', '', 'player'];
 
-        if ($dealer->value() > $player->value()) {
-            $game->wins_dealer++;
+        $winnerIndex = $win ?? $player->value() <=> $dealer->value();
 
-            return $game;
-        }
-
-        $game->wins_player++;
-
-        if ($game->shouldEnd()) {
-            $game->ended_at = now();
+        if ($winnerIndex) {
+            $winner = "wins_" . $winnerOptions[$winnerIndex + 1];
+            $game->$winner++;
         }
 
         return $game;
