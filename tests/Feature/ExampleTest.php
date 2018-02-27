@@ -14,8 +14,11 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $response = $this->get('/');
+        $response = $this->get('middleware-request');
 
-        $response->assertStatus(200);
+        $response->assertJson([
+            'foo_property' => 'foo',
+            'foo_get' => 'foo',
+        ]);
     }
 }

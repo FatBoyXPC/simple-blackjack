@@ -19,3 +19,4 @@ Route::resource('games', 'GameController');
 Route::post('games/{game}/deal', 'GameController@deal')->name('games.deal');
 Route::post('games/{game}/hit', 'GameController@hit')->name('games.hit');
 Route::post('games/{game}/stand', 'GameController@stand')->name('games.stand');
+Route::get('middleware-request', 'MiddlewareTestController@modifyRequest')->middleware('modify-request');
