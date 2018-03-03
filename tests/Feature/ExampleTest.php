@@ -21,4 +21,14 @@ class ExampleTest extends TestCase
             'foo_get' => 'foo',
         ]);
     }
+
+    public function testJsonInput()
+    {
+        $response = $this->json('GET', 'middleware-request', []);
+
+        $response->assertJson([
+            'foo_property' => 'foo',
+            'foo_get' => 'foo',
+        ]);
+    }
 }
