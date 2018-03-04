@@ -11,7 +11,7 @@ class MiddlewareTestController extends Controller
     {
         return response()->json([
             'foo_property' => $request->foo,
-            'foo_get' => $request->get('foo'),
+            'foo_get' => $request->input('foo'),
         ]);
     }
 }
